@@ -10,7 +10,20 @@
     <version>7</version>
   </parent>
   <properties>
+    <checkers.version>1.6.1</checkers.version>
   </properties>
+  <repositories>
+    <repository>
+      <id>checker-framework-repo</id>
+      <url>http://types.cs.washington.edu/m2-repo</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>checker-framework-repo</id>
+      <url>http://types.cs.washington.edu/m2-repo</url>
+    </pluginRepository>
+  </pluginRepositories>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -18,19 +31,15 @@
       <version>3.8.2</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>types.checkers</groupId>
+      <artifactId>checkers-quals</artifactId>
+      <version>${checkers.version}</version>
+    </dependency>
   </dependencies>
   <build>
     <defaultGoal>package</defaultGoal>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.5.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -57,6 +66,27 @@
              </goals>
            </execution>
          </executions>
+       </plugin>
+       <plugin>
+         <groupId>types.checkers</groupId>
+         <artifactId>checkers-maven-plugin</artifactId>
+         <version>${checkers.version}</version>
+         <executions>
+           <execution>
+             <phase>process-classes</phase>
+             <goals>
+               <goal>check</goal>
+             </goals>
+           </execution>
+         </executions>
+         <configuration>
+           <processors>
+             <processor>checkers.nullness.NullnessChecker</processor>
+           </processors>
+           <failOnError>false</failOnError>
+           <javaParams>-Xdebug</javaParams>
+           <checkersVersion>${checkers.version}</checkersVersion>
+         </configuration>
        </plugin>
     </plugins>
   </build>
