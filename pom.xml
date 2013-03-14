@@ -42,6 +42,18 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <verbose>true</verbose>
+          <fork>true</fork>
+          <source>1.8</source>
+          <target>1.7</target>
+          <executable>./dependencies/checker-framework-releases/checker-framework/checkers/binary/javac</executable>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>2.4</version>
         <executions>
